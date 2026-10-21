@@ -13,6 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
             {product.brand && <p className="text-sm text-gray-500">{product.brand}</p>}
             <p className="text-green-600 text-xl font-bold">${product.price.toFixed(2)}</p>
             <p className="text-sm">{product.rating}⭐</p>
+            {product.stock < 10 && <p className="text-sm font-bold text-yellow-700">Low Stock</p>}
         </div>
     );
 }
