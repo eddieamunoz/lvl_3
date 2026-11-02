@@ -6,18 +6,26 @@ import { Footer } from "./components/Footer"
 import { ProductSection } from "./components/ProductSection";
 import { StatsBar } from "./components/StatsBar";
 import { groupByCategory } from "./utils/groupByCategory";
-
-
+import { SearchBar } from "./components/SearchBar";
+import { useState } from "react";
+import { ProductGrid } from "./components/ProductGrid";
 
 
 function App() {
   const deals = products.filter(product => product.price < 20);
   const topRated = products.filter(product => product.rating >= 4.5 && product.stock > 0);
   const over5k = products.filter(product => product.price > 5000);
-  const groups = groupByCategory(products)
+  const groups = groupByCategory(products);
+  const [searchText, setSearchText] = useState("");
+  const searchResults = products.filter(product => product.title.toLowerCase().includes(searchText.toLowerCase()));
+
+
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <Navbar />
+      <SearchBar searchText={searchText} setSearchText={setSearchText} />
+      <p className="mb-4">Showing {searchResults.length} of {products.length} </p>
+      <ProductGrid products={searchResults}/>
       <StatsBar products={products}/>
       <ProductSection title="Deals under $20" products={deals}/>
       <ProductSection title="Top Rated" products={topRated}/>

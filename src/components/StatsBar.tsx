@@ -9,7 +9,7 @@ export function StatsBar({products}: {products: Product[]}) {
 
     return (
         
-        <div className="mb-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 mb-10 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             <div className= "max-w-xs rounded-lg border bg-white p-4">
                 <h2 className="text-sm text-gray-600 font-bold">Total Stock</h2>
                 <p className="text-lg font-bold">{totalStock.toLocaleString()}</p>

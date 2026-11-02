@@ -3,6 +3,7 @@ import { EmptyState } from "./EmptyState";
 import { ProductCard } from "./ProductCard";
 
 
+
 export function ProductGrid({products} : { products: Product[]}) {
     if (products.length === 0 ) {
             return <EmptyState message="No Products Here Yet!"/>
