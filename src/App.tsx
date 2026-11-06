@@ -18,11 +18,11 @@ function App() {
   const groups = groupByCategory(products);
   const [searchText, setSearchText] = useState("");
   const searchResults = products.filter(product => product.title.toLowerCase().includes(searchText.toLowerCase()));
-
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <Navbar />
+    <main className={`min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-white p-8 ${theme === "dark" ? "dark" :""}`}>
+      <Navbar theme={theme} setTheme={setTheme}/>
       <SearchBar searchText={searchText} setSearchText={setSearchText} />
       <p className="mb-4">Showing {searchResults.length} of {products.length} </p>
       <ProductGrid products={searchResults}/>
