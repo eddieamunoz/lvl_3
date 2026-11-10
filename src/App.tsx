@@ -19,23 +19,32 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const searchResults = products.filter(product => product.title.toLowerCase().includes(searchText.toLowerCase()));
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [favorites,setFavorites] = useState<number[]>([]);
+
+  function toggleFavorite(id: number) {
+    if (favorites.includes(id)) {
+      setFavorites(favorites.filter((favId) => favId !== id))
+    } else {
+      setFavorites([...favorites, id])
+    }
+  }
 
   return (
     <main className={`min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-white p-8 ${theme === "dark" ? "dark" :""}`}>
-      <Navbar theme={theme} setTheme={setTheme}/>
+      <Navbar theme={theme} setTheme={setTheme} favoriteCount={favorites.length} />
       <SearchBar searchText={searchText} setSearchText={setSearchText} />
       <p className="mb-4">Showing {searchResults.length} of {products.length} </p>
-      <ProductGrid products={searchResults}/>
+      <ProductGrid products={searchResults} favorites={favorites} onToggleFavorite={toggleFavorite}/>
       <StatsBar products={products}/>
-      <ProductSection title="Deals under $20" products={deals}/>
-      <ProductSection title="Top Rated" products={topRated}/>
-      <ProductSection title="Luxury (over $5,000)" products={over5k}/>
+      <ProductSection title="Deals under $20" products={deals} favorites={favorites} onToggleFavorite={toggleFavorite}/>
+      <ProductSection title="Top Rated" products={topRated} favorites={favorites} onToggleFavorite={toggleFavorite}/>
+      <ProductSection title="Luxury (over $5,000)" products={over5k} favorites={favorites} onToggleFavorite={toggleFavorite}/>
       <h2 className="mb-4 text-2xl font-bold">Shop by category</h2>
       {Object.entries(groups).map(([category, items]) => (
         <ProductSection
           key={category}
           title={`${category[0].toUpperCase() + category.slice(1)} (${items.length})`}
-          products={items}
+          products={items} favorites={favorites} onToggleFavorite={toggleFavorite}
         />
       ))}
       <Footer companyName="SummitGear Market"/>
